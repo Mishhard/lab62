@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplicationlab6.databinding.FragmentContactsBinding
-import com.example.myapplicationlab6.databinding.FragmentMainBinding
+
 
 class ContactsFragment : Fragment() {
     private var _binding: FragmentContactsBinding? = null

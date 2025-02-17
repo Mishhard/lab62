@@ -8,13 +8,11 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SettingsFragment" />
+        android:text="ChatsFragment" />
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/openChatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:paddingTop="50dp"
-/>
+        android:text="Перейти в чат" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplicationlab6.databinding.FragmentChatBinding
-import com.example.myapplicationlab6.databinding.FragmentMainBinding
 
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
