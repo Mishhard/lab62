@@ -32,7 +32,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun performLogin(login: String, password: String) {
-        RetrofitClient.api.login(login, password).enqueue(object : Callback<LoginResponse> {
+        val request = LoginRequest(login, password)
+        RetrofitClient.api.login(request).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.token?.let { token ->

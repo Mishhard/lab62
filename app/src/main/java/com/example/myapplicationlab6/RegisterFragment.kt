@@ -27,21 +27,27 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             val login = binding.etLogin.text.toString()
             val password = binding.etPassword.text.toString()
-            val email = binding.etEmail.text.toString()
+            val email = binding.etName.text.toString()
             performRegistration(login, password, email)
         }
     }
 
-    private fun performRegistration(login: String, password: String, email: String) {
-        RetrofitClient.api.register(login, password, email).enqueue(object : Callback<RegisterResponse> {
+    private fun performRegistration(login: String, password: String, name: String) {
+        val request = RegisterRequest(login, name, password)  // ✅ Используем правильную модель
+
+        RetrofitClient.api.register(request).enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                if (response.isSuccessful && response.body()?.success == true) {
+                if (response.isSuccessful && response.body()?.token != null) {
                     Toast.makeText(requireContext(), "Регистрация успешна!", Toast.LENGTH_SHORT).show()
 
-                    // После успешной регистрации сразу входим
+                    // Сохраняем токен (если нужно)
+                    val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().putString("TOKEN", response.body()?.token).apply()
+
+                    // После успешной регистрации входим
                     (parentFragment as? AuthFragment)?.onLoginSuccess()
                 } else {
-                    Toast.makeText(requireContext(), "Ошибка регистрации: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Ошибка регистрации: ${response.errorBody()?.string()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -50,4 +56,5 @@ class RegisterFragment : Fragment() {
             }
         })
     }
+
 }

@@ -1,22 +1,25 @@
 package com.example.myapplicationlab6
 
-data class LoginResponse(
-    val token: String // JWT-токен, возвращаемый сервером
-)
-
-data class UserResponse(
-    val id: String,
-    val name: String,
-    val email: String
+data class LoginRequest(
+    val login: String,
+    val password: String
 )
 
 data class RegisterRequest(
     val login: String,
-    val password: String,
-    val email: String
+    val name: String,
+    val password: String
+)
+
+data class LoginResponse(
+    val token: String? // API возвращает token, а не success
 )
 
 data class RegisterResponse(
-    val success: Boolean,
-    val message: String
+    val token: String?
+)
+
+data class UserResponse(
+    val id: String?,
+    val name: String?
 )
