@@ -1,6 +1,8 @@
 package com.example.myapplicationlab6
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,6 +25,23 @@ class MainActivity : AppCompatActivity() {
                 NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
+        val sharedPrefs = getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+        val token = sharedPrefs.getString("jwt_token", null)
 
+        if (token == null) {
+            // Если нет токена, отправляем на экран авторизации
+            navController.setGraph(R.navigation.navigation_graph, Bundle().apply {
+                putBoolean("isAuth", false)
+            })
+            binding.bottomNavigationView.visibility = View.GONE
+        } else {
+            // Если есть токен, загружаем обычную навигацию
+            navController.setGraph(R.navigation.navigation_graph, Bundle().apply {
+                putBoolean("isAuth", true)
+            })
+            binding.bottomNavigationView.visibility = View.VISIBLE
+        }
+
+        binding.bottomNavigationView.setupWithNavController(navController)
     }
 }
